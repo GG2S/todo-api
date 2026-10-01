@@ -1,0 +1,20 @@
+[Unit]
+Description=Todo FastAPI Service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ec2-user
+Group=ec2-user
+WorkingDirectory=/opt/todo-api
+Environment=APP_NAME=Todo API
+Environment=AWS_REGION=ap-northeast-2
+Environment=DYNAMODB_TABLE_NAME=todos
+ExecStart=/opt/todo-api/.venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 8000
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+
